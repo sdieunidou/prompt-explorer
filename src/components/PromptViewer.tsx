@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { PromptItem, Category } from "@/types/prompt";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Copy, Check, ExternalLink, X } from "lucide-react";
+import { Copy, Check, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -136,9 +137,9 @@ export function PromptViewer({ prompt, category, isOpen, onClose }: PromptViewer
               <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
             </div>
           ) : (
-            <pre className="font-mono text-sm text-foreground whitespace-pre-wrap leading-relaxed">
-              {content}
-            </pre>
+            <div className="prose prose-invert prose-sm max-w-none">
+              <ReactMarkdown>{content}</ReactMarkdown>
+            </div>
           )}
         </div>
       </DialogContent>
