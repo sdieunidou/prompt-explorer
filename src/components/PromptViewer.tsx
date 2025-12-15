@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { PromptItem, Category } from "@/types/prompt";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -138,9 +136,9 @@ export function PromptViewer({ prompt, category, isOpen, onClose }: PromptViewer
               <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
             </div>
           ) : (
-            <div className="markdown-content text-sm text-foreground">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-            </div>
+            <pre className="text-sm text-foreground whitespace-pre-wrap font-mono bg-secondary/30 p-4 rounded-lg overflow-x-auto">
+              {content}
+            </pre>
           )}
         </div>
       </DialogContent>
