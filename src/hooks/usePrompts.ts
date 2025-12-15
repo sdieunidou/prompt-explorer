@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { PromptManifest, PromptItem, Category } from "@/types/prompt";
 
-// Demo manifest URL - replace with your actual GitHub raw URL
-const MANIFEST_URL = "https://raw.githubusercontent.com/your-username/php-prompts/main/manifest.json";
+// GitHub manifest URL
+const MANIFEST_URL = "https://raw.githubusercontent.com/sdieunidou/ho-my-prompt/refs/heads/main/manifest.json";
 
 // Demo data for development
 const demoManifest: PromptManifest = {
@@ -102,27 +102,20 @@ export function usePrompts(manifestUrl?: string) {
     const fetchManifest = async () => {
       try {
         setIsLoading(true);
-        
-        // Try to fetch from the provided URL, fallback to demo data
-        if (manifestUrl) {
-          const response = await fetch(manifestUrl);
-          if (response.ok) {
-            const data = await response.json();
-            setManifest(data);
-          } else {
-            throw new Error("Failed to fetch manifest");
-          }
+        const url = manifestUrl || MANIFEST_URL;
+        const response = await fetch(url);
+        if (response.ok) {
+          const data = await response.json();
+          setManifest(data);
         } else {
-          // Use demo data
-          setManifest(demoManifest);
+          throw new Error("Failed to fetch manifest");
         }
-        
         setError(null);
       } catch (err) {
         console.error("Error fetching manifest:", err);
+        setError("Erreur lors du chargement du manifest");
         // Fallback to demo data on error
         setManifest(demoManifest);
-        setError(null);
       } finally {
         setIsLoading(false);
       }

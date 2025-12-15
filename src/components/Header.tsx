@@ -25,7 +25,7 @@ export function Header() {
               className="gap-2 text-muted-foreground hover:text-foreground"
               asChild
             >
-              <a href="https://github.com/your-username/php-prompts" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/sdieunidou/ho-my-prompt" target="_blank" rel="noopener noreferrer">
                 <Github className="h-4 w-4" />
                 <span className="hidden sm:inline">GitHub</span>
               </a>
@@ -36,7 +36,7 @@ export function Header() {
               className="gap-2 text-muted-foreground hover:text-foreground"
               asChild
             >
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/sdieunidou/ho-my-prompt/blob/main/README.md" target="_blank" rel="noopener noreferrer">
                 <FileText className="h-4 w-4" />
                 <span className="hidden sm:inline">Docs</span>
               </a>
