@@ -144,6 +144,10 @@ export function usePrompts(manifestUrl?: string) {
     return manifest?.categories.find((c) => c.id === id);
   };
 
+  const getPromptById = (id: string): PromptItem | undefined => {
+    return manifest?.prompts.find((p) => p.id === id);
+  };
+
   return {
     manifest,
     prompts: filteredPrompts,
@@ -155,5 +159,6 @@ export function usePrompts(manifestUrl?: string) {
     selectedCategory,
     setSelectedCategory,
     getCategoryById,
+    getPromptById,
   };
 }
