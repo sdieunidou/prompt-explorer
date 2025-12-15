@@ -172,3 +172,16 @@
 .markdown-content ol li {
   @apply list-decimal;
 }
+
+/* Task list styling */
+.markdown-content ul.contains-task-list {
+  @apply list-none pl-0;
+}
+
+.markdown-content li.task-list-item {
+  @apply list-none flex items-start gap-2;
+}
+
+.markdown-content li.task-list-item input[type="checkbox"] {
+  @apply mt-1 accent-primary;
+}
