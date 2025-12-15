@@ -1,73 +1,150 @@
-# Welcome to your Lovable project
+# PHP/Symfony Prompts - Référentiel de Prompts
 
-## Project info
+Une interface moderne pour parcourir et utiliser une collection de prompts destinés à la revue de code PHP/Symfony.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Fonctionnalités
 
-## How can I edit this code?
+- **Parcourir les prompts** : Interface intuitive avec recherche et filtrage par catégorie
+- **Copie rapide** : Copiez n'importe quel prompt en un clic
+- **Données centralisées** : Fetch automatique depuis un manifest JSON hébergé sur GitHub
+- **Design moderne** : Interface sombre et épurée, optimisée pour les développeurs
 
-There are several ways of editing your application.
+## 📁 Structure du Manifest
 
-**Use Lovable**
+L'interface récupère les données depuis un fichier `manifest.json` hébergé sur GitHub. Voici la structure attendue :
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```json
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-01-15",
+  "categories": [
+    {
+      "id": "security",
+      "name": "Sécurité",
+      "icon": "shield",
+      "description": "Prompts de vérification de sécurité"
+    }
+  ],
+  "prompts": [
+    {
+      "id": "sql-injection",
+      "title": "Vérification des injections SQL",
+      "description": "Analysez le code pour détecter les vulnérabilités...",
+      "category": "security",
+      "tags": ["SQL", "Doctrine", "Injection"],
+      "contentUrl": "https://raw.githubusercontent.com/your-username/php-prompts/main/prompts/sql-injection.md",
+      "difficulty": "intermediate"
+    }
+  ]
+}
 ```
 
-**Edit a file directly in GitHub**
+### Champs du Manifest
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+#### Categories
+| Champ | Type | Description |
+|-------|------|-------------|
+| `id` | string | Identifiant unique de la catégorie |
+| `name` | string | Nom affiché de la catégorie |
+| `icon` | string | Icône (code, shield, zap, file, database, settings, layers, bug) |
+| `description` | string | Description de la catégorie |
 
-**Use GitHub Codespaces**
+#### Prompts
+| Champ | Type | Description |
+|-------|------|-------------|
+| `id` | string | Identifiant unique du prompt |
+| `title` | string | Titre du prompt |
+| `description` | string | Description courte |
+| `category` | string | ID de la catégorie parente |
+| `tags` | string[] | Tags pour le filtrage |
+| `contentUrl` | string | URL du fichier Markdown contenant le prompt complet |
+| `difficulty` | string | Niveau de difficulté (beginner, intermediate, advanced) |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🔧 Configuration
 
-## What technologies are used for this project?
+### Modifier l'URL du Manifest
 
-This project is built with:
+Pour pointer vers votre propre dépôt GitHub, modifiez la constante `MANIFEST_URL` dans `src/hooks/usePrompts.ts` :
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```typescript
+const MANIFEST_URL = "https://raw.githubusercontent.com/VOTRE-USERNAME/VOTRE-REPO/main/manifest.json";
+```
 
-## How can I deploy this project?
+### Structure du Dépôt de Prompts
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```
+your-repo/
+├── manifest.json        # Fichier manifest principal
+└── prompts/
+    ├── sql-injection.md
+    ├── xss-check.md
+    └── ...
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 📝 Format des Fichiers Prompt
 
-Yes, you can!
+Chaque prompt est un fichier Markdown (.md) contenant le texte complet à copier :
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```markdown
+# Titre du Prompt
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Analysez le code suivant pour [description de l'objectif]...
+
+## Instructions
+1. Première instruction
+2. Deuxième instruction
+
+## Exemple de code à analyser
+[Le code PHP/Symfony à analyser]
+
+## Points à vérifier
+- Point 1
+- Point 2
+```
+
+## 🛠️ Technologies
+
+- **React 18** avec TypeScript
+- **Tailwind CSS** pour le styling
+- **Shadcn/ui** pour les composants
+- **Lucide React** pour les icônes
+- **Vite** pour le bundling
+
+## 📦 Installation
+
+```bash
+# Cloner le projet
+git clone https://github.com/your-username/php-prompts-ui
+
+# Installer les dépendances
+npm install
+
+# Lancer en développement
+npm run dev
+
+# Build pour la production
+npm run build
+```
+
+## 🎨 Personnalisation
+
+### Thème
+
+Les couleurs et styles sont définis dans `src/index.css` via les CSS custom properties. Modifiez les variables pour personnaliser le thème :
+
+```css
+:root {
+  --primary: 175 80% 50%;        /* Couleur d'accent */
+  --background: 222 47% 6%;      /* Fond principal */
+  /* ... */
+}
+```
+
+### Icônes de Catégorie
+
+Les icônes disponibles sont définies dans `CategoryFilter.tsx` et `PromptCard.tsx` :
+- `code`, `shield`, `zap`, `file`, `database`, `settings`, `layers`, `bug`
+
+## 📄 License
+
+MIT
