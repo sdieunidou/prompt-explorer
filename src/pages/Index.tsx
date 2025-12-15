@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { SearchBar } from "@/components/SearchBar";
 import { CategoryFilter } from "@/components/CategoryFilter";
@@ -9,6 +10,7 @@ import { PromptItem } from "@/types/prompt";
 import { Loader2, FileSearch } from "lucide-react";
 
 const Index = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     prompts,
     categories,
@@ -18,14 +20,33 @@ const Index = () => {
     selectedCategory,
     setSelectedCategory,
     getCategoryById,
+    getPromptById,
   } = usePrompts();
 
   const [selectedPrompt, setSelectedPrompt] = useState<PromptItem | null>(null);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
+  // Open prompt from URL parameter
+  useEffect(() => {
+    const promptId = searchParams.get("prompt");
+    if (promptId && !isLoading) {
+      const prompt = getPromptById(promptId);
+      if (prompt) {
+        setSelectedPrompt(prompt);
+        setIsViewerOpen(true);
+      }
+    }
+  }, [searchParams, isLoading, getPromptById]);
+
   const handlePromptClick = (prompt: PromptItem) => {
     setSelectedPrompt(prompt);
     setIsViewerOpen(true);
+    setSearchParams({ prompt: prompt.id });
+  };
+
+  const handleCloseViewer = () => {
+    setIsViewerOpen(false);
+    setSearchParams({});
   };
 
   return (
@@ -129,7 +150,7 @@ const Index = () => {
         prompt={selectedPrompt}
         category={selectedPrompt ? getCategoryById(selectedPrompt.category) : undefined}
         isOpen={isViewerOpen}
-        onClose={() => setIsViewerOpen(false)}
+        onClose={handleCloseViewer}
       />
     </div>
   );

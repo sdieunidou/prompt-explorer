@@ -3,7 +3,7 @@ import { PromptItem, Category } from "@/types/prompt";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Copy, Check, ExternalLink } from "lucide-react";
+import { Copy, Check, ExternalLink, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -61,6 +61,18 @@ export function PromptViewer({ prompt, category, isOpen, onClose }: PromptViewer
     }
   };
 
+  const handleShare = async () => {
+    if (!prompt) return;
+    
+    const url = `${window.location.origin}?prompt=${prompt.id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Lien copié dans le presse-papiers !");
+    } catch (err) {
+      toast.error("Erreur lors de la copie du lien");
+    }
+  };
+
   if (!prompt) return null;
 
   return (
@@ -99,6 +111,15 @@ export function PromptViewer({ prompt, category, isOpen, onClose }: PromptViewer
         <div className="flex items-center justify-between px-6 py-3 bg-secondary/50 border-b border-border">
           <span className="text-sm text-muted-foreground font-mono">prompt.md</span>
           <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 gap-2 text-muted-foreground hover:text-foreground"
+              onClick={handleShare}
+            >
+              <Share2 className="h-3.5 w-3.5" />
+              Partager
+            </Button>
             <Button
               variant="ghost"
               size="sm"
