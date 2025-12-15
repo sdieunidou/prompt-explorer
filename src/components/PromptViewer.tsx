@@ -137,7 +137,7 @@ export function PromptViewer({ prompt, category, isOpen, onClose }: PromptViewer
               <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
             </div>
           ) : (
-            <div className="prose prose-invert prose-sm max-w-none">
+            <div className="markdown-content text-sm text-foreground">
               <ReactMarkdown>{content}</ReactMarkdown>
             </div>
           )}
